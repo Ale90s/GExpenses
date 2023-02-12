@@ -5,18 +5,182 @@
 = MEMORIA
 :toc:
 
-include::documentacion/memoria/introduccion.adoc[]
+== Introducción
 
-include::documentacion/memoria/presentacion.adoc[]
+La creación de està aplicación web *GExpenses* ha sido creada por:
 
-include::documentacion/memoria/instalacion.adoc[]
+* *Alejandro* Algarra Delgado -> https://ale90s.github.io/
+* *Max* Freixa Sureda -> https://freixa21.github.io/
+* *Álex* Morales Luna -> https://morales-alex.github.io/
 
-include::documentacion/memoria/manualUsuario.adoc[]
+VÍDEO INTRODUCTORIO - https://drive.google.com/file/d/1vQKHne8FBMA-2AohG1jG4ULrtRGdZaGe/view?usp=sharing
 
-include::documentacion/memoria/diseno.adoc[]
+Te vas de viaje con tus amigos y durante todo el viaje teneis que _dividir gastos_. Puede ser un proceso fatigante. _GExpenses soluciona el problema_.
+====
+*GExpenses* nace con el objetivo de facilitar la division de gastos entre amigos de una manera sencilla
+====
 
-include::documentacion/memoria/liniasFuturas.adoc[]
+== Presentación
 
-include::documentacion/memoria/conclusion.adoc[]
+Con una flota de programadores a su espalda. GExpenses ha abierto sus puertas este año para todas los grupos de personas que quieran dividir sus gastos de manera fácil y sencilla.
 
-include::documentacion/memoria/glosario.adoc[]
+Entre otras funcionalidades ofrecemos:
+
+ * Creación de actividades en las que se podrán añadir varios gastos.
+ * Añadir/Quitar a tus amigos de una actividad.
+ * Invitar a todos tus amigos en las actividades que participaréis.
+ * Crear invitaciones por correo electrónico para poder agilizar todo el proceso.
+
+== Instalación
+
+Para descargarte la aplicación debes seguir los siguientes pasos:
+
+ * Clonar el proyecto de gitlab en el siguiente enlace: 
+
+ - https://git.copernic.cat/algarra.delgado.alejandro/GExpenses_3p1
+
+ * Una vez clonado haremos uso de vagrant para tener la estructura de la base de datos, php y apache por lo que deberemos descargarnos:
+ - VirtualBox [ Preferiblemente la versión LTS más actualizada ]
+ - Vagrant.
+
+Después debes de situarte en la carpeta de vagrant en la carpeta de GExpenses y ejecutar el comando *vagrant up*. Esto ejecutará el script de vagrant y dejará toda la estructura de la base de datos configurada, php y Apache para su uso. Solo deberà entrar a la ip de vagrant ``192.168.50.237`` en su navegador de preferència
+.
+
+
+== Manual Usuario
+
+LINK A LA APLICACIÓN -> http://192.168.50.237/
+
+- Para hacer pruebas de la aplicación sin registrarse se puede utilizar el siguiente usuario: 
+
+Usuario: *admin* -  Contraseña: *123*
+
+- Para probar las invitaciones por correo: https://mailtrap.io/
+
+Usuario : *freixa.sureda.max@alumnat.copernic.cat* - Contraseña: *GExpenses_3P1*
+
+*Registro, inicio de sesión y creación de tu primera actividad + invitar
+usuarios a tu actividad*
+
+Lo primero que deberías hacer al entrar a la aplicación sería
+*registrarse.*
+
+image::EjRegistro.png[EjRegistro]
+
+Los requisitos mínimos de seguridad se pueden ver si pasas el ratón por
+encima de la interrogación.
+
+Una vez nos registramos nos iniciará sesión automáticamente, una vez en
+el 'home' deberemos pulsar el botón de 'Añadir actividad', una vez ahí
+rellenaremos los datos de la actividad (Nombre, moneda [€ o $] y
+descripción)
+
+image::EjAñadirActividad.png[EjAñadirActividad]
+
+Con los datos de la actividad rellenados le daremos a '*enviar'* para
+crear la nueva actividad.
+
+image::EjHomeLayout.png[EjHomeLayout]
+
+En esta foto se puede ver la ventana 'home' con la actividad ya creada,
+dónde como se puede observar se pueden añadir más actividades, *filtrar
+por fecha de modificación o fecha de creación de la actividad* o incluso
+*salir de la aplicación* desde el icono de la puerta que se ve arriba a
+la derecha.
+
+Para *añadir a tus amigos a la actividad* desde dentro de la actividad
+se debe pulsar el botón que dice 'Invitar Usuarios'
+
+image::EjInvitarUsuario.png[EjInvitarUsuario]
+
+Debes escribir el correo de cada amigo y darle al botón 'Añadir', cuando
+ya hayas añadido todos los correos le debes dar al botón 'Enviar'. Una
+vez pulsado les llegará a tus amigos invitaciones al correo para que se
+unan a la actividad.
+
+Layout de invitación a una actividad.
+
+image::EjInvitacion.png[EjInvitacion]
+
+*Añadir gastos y repartición entre tus amigos*
+
+Una vez ya se hayan unido tus amigos a la actividad ya puedes empezar a
+repartir los gastos. Empieza añadiendo un gasto. Puedes añadir los
+gastos de tres maneras diferentes:
+
+*1. General:* Donde se repartirán los gastos con la misma cuantía para
+todos.
+
+image::EjGastoGeneral.png[EjGastoGeneral]
+
+*2. Avanzado:* Donde personalizar cuánto paga cada uno por dinero.
+
+image::EjGastoAvanzado.png[EjGastoAvanzado]
+
+*3. Proporcional:* Donde personalizar cuánto paga cada uno por
+proporciones.
+
+image::EjGastoProporcional.png[EjGastoProporcional]
+
+Esto sería un ejemplo de una actividad con deudas
+
+image::EjActividadDeudas.png[EjActividadDeudas]
+
+Para cobrar una deuda simplemente debes clicar 'Pagar Deuda' en la deuda
+que tengas pendiente
+
+image::EjPagarDeuda.png[EjPagarDeuda]
+
+
+=== Diseño
+
+*[.underline]#Estructura Base de Datos#*
+
+La estructura de la base de datos de la aplicación es la siguiente:
+
+image::BBDD_ER_GExpenses.png[Estructura BBDD]
+
+Hemos pensado en esta solución ya que Usuarios y Actividades son una
+relación *'n, n'* por lo que se debía crear una tabla intermedia, puedes
+crear un usuario sin crear una actividad y viceversa, y cuando haya una
+relación entre actividad y usuario podrás relacionar gastos con la clave
+del usuario que ha pagado *g_idUsu*.
+
+También hemos creado una tabla *gastos* que serán las líneas de actividades, cada gasto de la actividad se guardará ahí señalando al usuario que ha pagado ese gasto de la actividad.
+
+Por otro lado hemos creado una tabla para las *invitaciones.* Donde se almacenará toda la información necesaria para la inserción de un nuevos usuario por correo. Como por ejemplo la fecha de envío de la invitación, para a posteriori ver si ha caducado y no valga ese enlace para unirse a la actividad.
+
+Como *nomenclatura* de las columnas de la base de datos hemos decidido
+usar minúsculas y la primera inicial del nombre de la tabla para
+identificar de manera más fácil a qué columna nos estamos refiriendo.
+
+=== Mockup
+Siempre que teníamos que realizar cualquier cambio en el frontend de la página lo comentábamos brevemente los tres integrantes del grupo para tener una idea general de lo que se va a realizar. Siempre siguiente la _guia de estilos_. Todos los mockup que hemos realizado para las ventanas de la página web estsán en el siguiente link, -> https://marvelapp.com/start-user-test/aPaRQ6Hj7pl1JAHYoIt3[aquí]
+
+=== Implementación html/css
+Siguiendo la guia de estilos y el Mockup, hemos desarrolado las páginas con flex.
+ Hemos utilizado las propiedades "flex" para situar todos los elementos de las diferentes páginas de la página web.
+ De esta forma hemos conseguido que la página se adapte a un amplio abanico de resoluciones de pantalla.
+
+
+== Lineas Futuras
+
+En una futura versión de la aplicación tenemos en mente crear un apartado para la modificación de un usuario, donde una vez al mes podrás cambiarte el nombre de usuario si quieres, o subir una foto de perfil dónde se te pueda identificar de forma más clara.
+
+Por otra parte a la larga se crearía un apartado de amigos, donde podrás invitar de manera más rápido a tus amigos, un pequeño chat en vivo dónde puedas chatear con ellos en directo.
+
+También hemos planteado implementar opciones como de modificar el nombre de una actividad y borrar usuarios de una actividad los cuáles ya no participen en dicha actividad.
+
+
+== Conclusion
+Finalizando, estamos orgullosos de el trabajo realizado en estos meses. 
+Durante el camino del desarrollo de la aplicación, hemos aprendido los siguientes aspectos que queremos remarcar:
+
+Trabajar con con *tecnologias vanilla*, lo qual es una arma de doble filo; Tienes total flexibilidad con el lenguaje utilizado. pero tienes que conocer bien cuales son los fuertes del lenguaje y debilidades.
+Asimismo tener que ordenar los archivos y decidir como distribuir las funcionalidades entre los mismos.
+
+Por otro lado: *organización*, *delegación de trabajo*, *saber escuchar*, *valorar* y *dar ideas*. Són las palabras que describirian nuestro trabajo colaborativo. Teniendo los 3 un objetivo cómun. *Aprender*.
+
+
+== Glosario
+https://developer.mozilla.org/es/docs/Web/JavaScript[JavaScript] - https://developer.mozilla.org/es/docs/Web/HTML[HTML] - https://developer.mozilla.org/es/docs/Learn/CSS[CSS] - https://developer.hashicorp.com/vagrant/tutorials/getting-started[Vagrant] - https://css-tricks.com/snippets/css/a-guide-to-flexbox/[Guia FlexBox] - https://www.php.net/manual/es/[PHP] - https://www.w3schools.com/sql/[SQL]
